@@ -3,7 +3,7 @@ import { CheckCircle2, Flame, Inbox, ShieldCheck, Ticket, Timer, UserPlus, Clock
 import { api } from "../api";
 import { formatDuration, initials, isActive, slaInfo, summarise, ticketCode, timeAgo, toDate } from "../utils";
 import { PriorityBadge } from "./Badges";
-import { Donut, Sparkline, VolumeBars } from "./charts";
+import { Donut, Sparkline, VolumeBars } from "./Charts";
 
 const CATEGORY_COLORS = ["#6366f1", "#2b8cf0", "#14b8c4", "#6cbf6a", "#d9a441", "#e07b39", "#9aa3b2"];
 const SLA_ICON = { ok: Clock, warn: AlertTriangle, bad: XCircle };
