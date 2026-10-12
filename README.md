@@ -4,7 +4,7 @@ A web app where employees report IT problems and support staff triage, assign an
 An AI step reads each problem and suggests a **category**, a **priority** and **first troubleshooting steps**,
 and can **draft a reply** to the employee.
 
-**Live demo:** _add your Vercel URL_  |  **API docs:** _add your Render URL_`/docs`
+**Live demo:** https://ai-powered-it-helpdesk-psi.vercel.app/
 
 _Add 2 or 3 screenshots here (dashboard, new ticket with AI suggestion, admin panel)._
 
