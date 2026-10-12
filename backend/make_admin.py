@@ -19,7 +19,7 @@ password = sys.argv[2] if len(sys.argv) > 2 else None
 name = sys.argv[3] if len(sys.argv) > 3 else "Admin"
 
 # Must happen BEFORE importing database/models, because database.py reads the URL at import time.
-url = input("Paste DATABASE_URL (or press Enter to use .env / local SQLite): ").strip().strip('"').strip("'")
+url = input("postgresql://it_helpdesk_db_tvo2_user:6Bf7F9p8Sowyibq0nhZONPY0Q0Q5dPWY@dpg-db6ds7nlk1mc73ct6qbg-a.oregon-postgres.render.com/it_helpdesk_db_tvo2 ").strip().strip('"').strip("'")
 if url:
     os.environ["DATABASE_URL"] = url
 
