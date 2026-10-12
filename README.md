@@ -6,8 +6,6 @@ and can **draft a reply** to the employee.
 
 **Live demo:** https://ai-powered-it-helpdesk-psi.vercel.app/
 
-_Add 2 or 3 screenshots here (dashboard, new ticket with AI suggestion, admin panel)._
-
 ## Features
 - **Sign in / create account** with three roles (see the table below)
 - Create, view, edit and delete tickets; set priority, status, category and assignee

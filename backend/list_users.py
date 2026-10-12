@@ -1,13 +1,26 @@
+"""List every user and role in the database.
+
+Usage:
+    python list_users.py
+
+The database URL is NOT stored in this file. Set DATABASE_URL in your terminal first,
+or paste it when asked. Leave it empty to use the local .env / SQLite database.
+"""
 import os
 
-url = input("postgresql://it_helpdesk_db_tvo2_user:6Bf7F9p8Sowyibq0nhZONPY0Q0Q5dPWY@dpg-db6ds7nlk1mc73ct6qbg-a.oregon-postgres.render.com/it_helpdesk_db_tvo2 ").strip().strip('"').strip("'")
-if url:
-    os.environ["DATABASE_URL"] = url
+# Must happen BEFORE importing database/models, because database.py reads the URL at import time.
+if not os.getenv("DATABASE_URL"):
+    url = input("Paste DATABASE_URL (Enter = local .env / SQLite): ").strip().strip('"').strip("'")
+    if url:
+        os.environ["DATABASE_URL"] = url
 
 import models  # noqa: E402
 from database import SessionLocal, engine  # noqa: E402
 
-print(f"Connected to: {engine.url.render_as_string(hide_password=True)}\n")
+backend = engine.url.get_backend_name()
+print(f"Connected to: {engine.url.render_as_string(hide_password=True)}")
+print("Database type:", "LOCAL SQLite" if backend == "sqlite" else "PostgreSQL (live)", "\n")
+
 with SessionLocal() as db:
     users = db.query(models.User).order_by(models.User.id).all()
     if not users:
