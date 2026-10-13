@@ -90,7 +90,16 @@ export default function App() {
     setSummary(null);
   }
 
-  if (booting) return <p className="boot">Connecting to the server. The first load can take up to a minute on free hosting.</p>;
+  if (booting) {
+    return (
+      <div className="login-wrap-3d">
+        <div className="boot-pulse">
+          <div className="pulse-loader" />
+          <p className="muted">Connecting to secure HelpDesk cluster…</p>
+        </div>
+      </div>
+    );
+  }
   if (!user) return <Login onLogin={handleLogin} />;
 
   const staff = isStaff(user);
@@ -104,8 +113,13 @@ export default function App() {
   };
 
   let content;
-  if (error) content = <p className="error" role="alert">{error}</p>;
-  else if (!meta) content = <p className="muted">Loading…</p>;
+  if (error) content = <p className="error error-3d" role="alert">{error}</p>;
+  else if (!meta) content = (
+    <div className="boot-pulse">
+      <div className="pulse-loader" />
+      <p className="muted">Synchronizing workspace metadata…</p>
+    </div>
+  );
   else if (page === "dashboard") content = <Dashboard user={user} onOpen={open} />;
   else if (page === "tickets") content = <TicketList user={user} meta={meta} onOpen={open} onNew={() => setView("new")} />;
   else if (page === "new") content = <TicketForm meta={meta} onCreated={open} onCancel={() => setView("tickets")} />;
