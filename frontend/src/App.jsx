@@ -16,10 +16,11 @@ const isMobile = () => window.matchMedia(MOBILE).matches;
 
 function initialTheme() {
   try {
-    const saved = localStorage.getItem("theme");
-    if (saved) return saved;
+    const saved = localStorage.getItem("helpdesk_theme");
+    if (saved === "dark" || saved === "light") return saved;
+    localStorage.removeItem("theme");
   } catch { /* ignore */ }
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return "light";
 }
 
 export default function App() {
@@ -46,7 +47,7 @@ export default function App() {
   // Apply the theme to the whole page.
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    try { localStorage.setItem("theme", theme); } catch { /* ignore */ }
+    try { localStorage.setItem("helpdesk_theme", theme); } catch { /* ignore */ }
   }, [theme]);
 
   // On first load: if a token is saved, ask the server who we are.

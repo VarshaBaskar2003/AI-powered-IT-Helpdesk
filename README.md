@@ -61,7 +61,7 @@ backend/
 frontend/src/
   App.jsx, api.js, utils.js, styles.css
   components/      Login, Sidebar, Topbar, Dashboard, charts, TicketList, TicketForm,
-                   TicketDetail, Users (Admin panel), AdminSignIn, Badges
+                   TicketDetail, Users (Admin panel), AdminSignIn, Badges, Card3D, Scene3D
 docs/
   AI_NOTE.md       short note on the AI tool used
 ```

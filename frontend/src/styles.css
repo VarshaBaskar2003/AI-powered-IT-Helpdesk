@@ -4,18 +4,18 @@
    ========================================================================== */
 
 :root {
-  /* Core Color System - Light Mode */
-  --bg: #f0f4fc;
-  --bg-subtle: #e6eef9;
-  --panel: rgba(255, 255, 255, 0.9);
+  /* Core Color System - Light Mode (Crisp High-End White Theme) */
+  --bg: #f8fafc;
+  --bg-subtle: #f1f5f9;
+  --panel: rgba(255, 255, 255, 0.94);
   --panel-solid: #ffffff;
-  --side: rgba(245, 248, 255, 0.96);
+  --side: #ffffff;
   --ink: #0f172a;
   --ink-secondary: #334155;
   --muted: #64748b;
-  --line: rgba(215, 224, 242, 0.9);
+  --line: #e2e8f0;
   --line-strong: #cbd5e1;
-  --track: #e2e8f0;
+  --track: #f1f5f9;
 
   /* Brand & Accents */
   --brand: #6366f1;
@@ -335,17 +335,18 @@ main {
 .topbar-modern {
   height: 64px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   padding: 0 max(28px, env(safe-area-inset-right)) 0 max(28px, env(safe-area-inset-left));
   border-bottom: 1px solid var(--line);
   background: var(--panel);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: sticky;
   top: 0;
   z-index: 20;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .topbar-left,
@@ -353,34 +354,55 @@ main {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+
+.topbar-left {
+  flex: 1 1 auto;
+}
+
+.topbar-right {
+  flex: 0 0 auto;
 }
 
 .topbar-btn {
   position: relative;
   width: 38px;
   height: 38px;
-  display: grid;
-  place-items: center;
-  background: var(--panel);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel-solid);
   border: 1px solid var(--line);
   border-radius: 11px;
   color: var(--ink-secondary);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04), var(--bevel-light);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), var(--bevel-light);
   transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .topbar-btn:hover {
   background: var(--track);
   color: var(--ink);
-  transform: translateY(-2px);
-  border-color: var(--brand);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.topbar-btn:active {
+  transform: translateY(0);
+}
+
+.topbar-btn.has-alert {
+  border-color: rgba(244, 63, 94, 0.35);
 }
 
 .topbar-breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
@@ -389,64 +411,60 @@ main {
   font-size: 0.95rem;
   color: var(--brand);
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .breadcrumb-sep {
   color: var(--muted);
-  opacity: 0.6;
+  opacity: 0.5;
+  flex-shrink: 0;
 }
 
 .breadcrumb-current {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   color: var(--ink);
   letter-spacing: -0.01em;
   margin: 0;
-}
-
-.topbar-system-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--ok-soft);
-  color: var(--ok);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 3px 9px;
-  border-radius: 999px;
-  margin-left: 6px;
-}
-
-.system-status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 6px #10b981;
-  animation: pulse-live 2s infinite ease-in-out;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  line-height: 1.2;
 }
 
 .topbar-search-pill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  height: 38px;
+  padding: 0 12px;
   background: var(--panel-solid);
   border: 1px solid var(--line);
-  padding: 7px 12px;
   border-radius: 11px;
   color: var(--muted);
   font-size: 0.82rem;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   transition: all 0.2s ease;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .topbar-search-pill:hover {
   border-color: var(--brand);
   color: var(--ink);
+  background: var(--bg);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.12);
   transform: translateY(-1px);
+}
+
+.search-pill-icon {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.search-pill-text {
+  font-weight: 500;
 }
 
 .search-shortcut {
@@ -455,7 +473,7 @@ main {
   gap: 2px;
   background: var(--track);
   border: 1px solid var(--line);
-  padding: 2px 5px;
+  padding: 2px 6px;
   border-radius: 5px;
   font-size: 0.68rem;
   font-family: inherit;
@@ -467,13 +485,16 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 5px 12px;
+  height: 34px;
+  padding: 0 12px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: var(--panel);
-  box-shadow: var(--bevel-light);
+  background: var(--panel-solid);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
 }
 
 .role-status-dot {
@@ -481,12 +502,36 @@ main {
   height: 6px;
   border-radius: 50%;
   background: var(--brand);
+  flex-shrink: 0;
+}
+
+.role-employee {
+  background: var(--track);
+  color: var(--ink-secondary);
+}
+
+.role-employee .role-status-dot {
+  background: var(--muted);
+}
+
+.role-agent {
+  background: var(--ok-soft);
+  color: var(--ok-ink);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.role-agent .role-status-dot {
+  background: var(--ok);
 }
 
 .role-admin {
   background: var(--brand-soft);
   color: var(--brand-ink);
-  border-color: rgba(99, 102, 241, 0.35);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.role-admin .role-status-dot {
+  background: var(--brand);
 }
 
 .topbar-alert-dot {
@@ -497,22 +542,52 @@ main {
   height: 8px;
   border-radius: 50%;
   background: #f43f5e;
-  border: 2px solid var(--panel);
-  box-shadow: 0 0 10px #f43f5e;
+  border: 2px solid var(--panel-solid);
+  box-shadow: 0 0 8px #f43f5e;
+}
+
+.pulse-red {
+  animation: pulse-live 1.8s infinite ease-in-out;
+}
+
+.theme-icon {
+  transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.sun-glow {
+  color: #f59e0b;
+}
+
+.moon-glow {
+  color: #6366f1;
+}
+
+.topbar-theme-toggle:hover .sun-glow {
+  transform: rotate(45deg);
+}
+
+.topbar-theme-toggle:hover .moon-glow {
+  transform: rotate(-20deg);
+}
+
+/* Keep the notification popover inside the viewport */
+.pop-wrap {
+  position: relative;
 }
 
 .popover-modern {
   position: absolute;
   right: 0;
-  top: 48px;
+  top: calc(100% + 8px);
   width: min(320px, calc(100vw - 28px));
+  max-width: calc(100vw - 24px);
   background: var(--panel-solid);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 14px;
   box-shadow: var(--shadow-floating);
   backdrop-filter: blur(20px);
-  z-index: 25;
+  z-index: 50;
 }
 
 .popover-head {
@@ -2463,8 +2538,22 @@ textarea {
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
+  .breadcrumb-root,
+  .breadcrumb-sep {
+    display: none;
+  }
 
+  .search-pill-text {
+    display: none;
+  }
+
+  .topbar-search-pill {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 860px) {
   .app,
   .app:not(.nav-open) {
     grid-template-columns: 1fr;
@@ -2502,10 +2591,71 @@ textarea {
   .topbar-modern {
     padding-left: max(16px, env(safe-area-inset-left));
     padding-right: max(16px, env(safe-area-inset-right));
+    gap: 10px;
+  }
+
+  .search-shortcut {
+    display: none;
   }
 
   .topbar-search-pill {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 11px;
+  }
+
+  .search-pill-text {
     display: none;
+  }
+
+  .topbar-role-badge {
+    height: 32px;
+    padding: 0 8px;
+  }
+
+  .role-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar-modern {
+    padding-inline: 10px;
+    height: 56px;
+    gap: 6px;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .topbar-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .topbar-search-pill {
+    width: 36px;
+    height: 36px;
+  }
+
+  .breadcrumb-current {
+    font-size: 0.92rem;
+  }
+
+  .pop-wrap {
+    position: static;
+  }
+
+  .popover-modern {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
   }
 }
 

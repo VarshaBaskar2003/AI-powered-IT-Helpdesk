@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { Headset, Sparkles, Shield, User, KeyRound, ArrowRight } from "lucide-react";
+import { Headset, Sparkles, Shield, User, ArrowRight } from "lucide-react";
 import { api, setToken } from "../api";
 import Scene3D from "./Scene3D";
 import Card3D from "./Card3D";
 
+// Demo credentials, used only on the Sign in screen
+const DEMO_FORM = { name: "", email: "abc@example.com", password: "Abc12345" };
+
+// Sign up always starts completely empty
+const EMPTY_FORM = { name: "", email: "", password: "" };
+
 export default function Login({ onLogin }) {
   const [mode, setMode] = useState("login"); // "login" or "register"
-  const [selectedRole, setSelectedRole] = useState("admin"); // Admin tab selected by default
-  const [form, setForm] = useState({
-    name: "",
-    email: "abc@example.com",
-    password: "Abc12345",
-  });
+  const [selectedRole, setSelectedRole] = useState("admin");
+  const [form, setForm] = useState(DEMO_FORM);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const isLogin = mode === "login";
@@ -19,7 +21,7 @@ export default function Login({ onLogin }) {
   const update = (key) => (e) => {
     const val = e.target.value;
     setForm((f) => ({ ...f, [key]: val }));
-    if (key === "email") {
+    if (key === "email" && isLogin) {
       if (val === "abc@example.com") setSelectedRole("admin");
       else if (val === "testuser@example.com") setSelectedRole("user");
       else setSelectedRole(null);
@@ -42,10 +44,24 @@ export default function Login({ onLogin }) {
     }
   }
 
-  // Quick Demo fill buttons for hassle-free evaluation
+  // Quick demo fill (Sign in only)
   const selectPreset = (role, email, password) => {
     setSelectedRole(role);
     setForm((f) => ({ ...f, email, password }));
+    setError("");
+  };
+
+  // Switch between Sign in and Sign up
+  const switchMode = () => {
+    if (isLogin) {
+      setForm({ ...EMPTY_FORM });
+      setSelectedRole(null);
+      setMode("register");
+    } else {
+      setForm({ ...DEMO_FORM });
+      setSelectedRole("admin");
+      setMode("login");
+    }
     setError("");
   };
 
@@ -75,42 +91,51 @@ export default function Login({ onLogin }) {
           </p>
         </div>
 
-        {/* Quick Demo Credentials Bar */}
-        <div className="demo-credentials-3d">
-          <div className="demo-chip-label">
-            <Sparkles size={13} className="sparkle-icon" aria-hidden="true" />
-            <span>Quick Demo Auto-Fill:</span>
+        {/* Quick Demo Credentials Bar: Sign in only */}
+        {isLogin && (
+          <div className="demo-credentials-3d">
+            <div className="demo-chip-label">
+              <Sparkles size={13} className="sparkle-icon" aria-hidden="true" />
+              <span>Quick Demo Auto-Fill:</span>
+            </div>
+            <div className="demo-chips">
+              <button
+                type="button"
+                className={`chip-btn-3d ${selectedRole === "admin" ? "active" : ""}`}
+                onClick={() => selectPreset("admin", "abc@example.com", "Abc12345")}
+                title="IT Administrator"
+              >
+                <Shield size={13} /> Admin
+              </button>
+              <button
+                type="button"
+                className={`chip-btn-3d ${selectedRole === "user" ? "active" : ""}`}
+                onClick={() => selectPreset("user", "testuser@example.com", "Test12345")}
+                title="Employee / Requester"
+              >
+                <User size={13} /> Test User
+              </button>
+            </div>
           </div>
-          <div className="demo-chips">
-            <button
-              type="button"
-              className={`chip-btn-3d ${selectedRole === "admin" ? "active" : ""}`}
-              onClick={() => selectPreset("admin", "abc@example.com", "Abc12345")}
-              title="IT Administrator"
-            >
-              <Shield size={13} /> Admin
-            </button>
-            <button
-              type="button"
-              className={`chip-btn-3d ${selectedRole === "user" ? "active" : ""}`}
-              onClick={() => selectPreset("user", "testuser@example.com", "Test12345")}
-              title="Employee / Requester"
-            >
-              <User size={13} /> Test User
-            </button>
-          </div>
-        </div>
+        )}
 
-        <form className="form form-3d" onSubmit={submit}>
+        {/* key={mode} forces fresh inputs when switching, so nothing is carried over */}
+        <form
+          key={mode}
+          className="form form-3d"
+          onSubmit={submit}
+          autoComplete={isLogin ? "on" : "off"}
+        >
           {!isLogin && (
             <label className="field field-3d">
               <span>Full name</span>
               <div className="input-wrap-3d">
                 <input
+                  name="signup-name"
                   required
                   minLength={2}
                   maxLength={80}
-                  autoComplete="name"
+                  autoComplete="off"
                   placeholder="e.g. Alex Morgan"
                   value={form.name}
                   onChange={update("name")}
@@ -123,10 +148,11 @@ export default function Login({ onLogin }) {
             <span>Work Email</span>
             <div className="input-wrap-3d">
               <input
+                name={isLogin ? "login-email" : "signup-email"}
                 type="email"
                 required
                 maxLength={120}
-                autoComplete="email"
+                autoComplete={isLogin ? "email" : "off"}
                 placeholder="you@company.com"
                 value={form.email}
                 onChange={update("email")}
@@ -138,6 +164,7 @@ export default function Login({ onLogin }) {
             <span>Password</span>
             <div className="input-wrap-3d">
               <input
+                name={isLogin ? "login-password" : "signup-password"}
                 type="password"
                 required
                 minLength={isLogin ? 1 : 8}
@@ -160,14 +187,7 @@ export default function Login({ onLogin }) {
         </form>
 
         <div className="login-footer-3d">
-          <button
-            type="button"
-            className="link center"
-            onClick={() => {
-              setMode(isLogin ? "register" : "login");
-              setError("");
-            }}
-          >
+          <button type="button" className="link center" onClick={switchMode}>
             {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
           </button>
         </div>
