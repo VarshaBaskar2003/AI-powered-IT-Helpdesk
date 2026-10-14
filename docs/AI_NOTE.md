@@ -1,6 +1,6 @@
 # AI note
 
-**Provider:** Groq API, model `llama-3.3-70b-versatile` (Llama 3.3 70B). Gemini (`gemini-2.0-flash`) is an
+**Provider:** Groq API, model `openai/gpt-oss-20b` (Llama 3.3 70B). Gemini (`gemini-2.0-flash`) is an
 optional backup. Both are called over plain HTTPS from `backend/ai_service.py`, with the key stored only in the
 backend `.env`.
 
